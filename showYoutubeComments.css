@@ -1,3 +1,8 @@
-#secondary-inner::-webkit-scrollbar {
+#secondary {
+    overflow: scroll;
+    overscroll-behavior: contain;
+}
+
+#secondary::-webkit-scrollbar {
     display: none;
 }
