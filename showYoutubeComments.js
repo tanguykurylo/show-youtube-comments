@@ -16,7 +16,6 @@ function swapCommentsAndWatchNext() {
 	let watchNextNode = rightPanel().removeChild(watchNext());
 	leftPanel().appendChild(watchNextNode);
 	rightPanel().appendChild(commentsNode);
-	
 }
 
 function comments() {

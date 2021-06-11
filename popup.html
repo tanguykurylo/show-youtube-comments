@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Options</title>
+    </head>
+    <style type="text/css">
+        body {
+            margin: 5px;
+            width: 180px;
+        }
+        #scroll-option-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        #scroll-option-container > label {
+            font-size: 1.1em;
+        }
+        #scroll-option-container > * {
+            cursor: pointer;
+        }
+    </style>
+    <body>
+        <div id="scroll-option-container">
+            <input type="checkbox" id="show-scrollbar" name="scollbar-ativated">
+            <label for="show-scrollbar">Show comments scrollbar</label> 
+        </div>
+    </body>
+    <script src="popup.js"></script>
+</html>

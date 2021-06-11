@@ -12,11 +12,15 @@
         "https://www.youtube.com/*",
         "tabs",
         "activeTab",
-        "webNavigation"
+        "webNavigation",
+        "storage"
     ],
     "background": {
         "scripts": ["detectPageChange.js"],
         "persistent": false
+    },
+    "browser_action": {
+        "default_popup": "popup.html"
     },
     "icons": {
         "128": "128.png"
