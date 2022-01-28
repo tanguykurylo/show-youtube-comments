@@ -1,23 +1,23 @@
-chrome.runtime.onInstalled.addListener(function(details) {
-  if(details.reason == "install") {
+chrome.runtime.onInstalled.addListener(details => {
+  if(details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
     chrome.storage.sync.set({ "show-scrollbar": false });
   }
 });
 chrome.webNavigation.onCommitted.addListener(loadScriptAndCss, {
     url: [{
-        urlMatches: 'https://www.youtube.com/watch'
+        urlPrefix: 'https://www.youtube.com/watch'
     }]
 });
 
-function loadScriptAndCss() {
-    chrome.tabs.executeScript({file: "showYoutubeComments.js"});
-    chrome.tabs.insertCSS({file: "showYoutubeComments.css"});
+function loadScriptAndCss(tab) {
+    chrome.scripting.executeScript({target: {tabId: tab.tabId}, files: ["showYoutubeComments.js"]});
+    chrome.scripting.insertCSS({target: {tabId: tab.tabId}, files: ["showYoutubeComments.css"]});
     chrome.storage.sync.get(['show-scrollbar'], value => {
         if (value['show-scrollbar'] == true) {
-            chrome.tabs.insertCSS({file: "showYoutubeComments-scrollbar.css"});
+            chrome.scripting.insertCSS({target: {tabId: tab.tabId}, files: ["showYoutubeComments-scrollbar.css"]});
         }
         else {
-            chrome.tabs.removeCSS({file: "showYoutubeComments-scrollbar.css"});
+            chrome.scripting.removeCSS({target: {tabId: tab.tabId}, files: ["showYoutubeComments-scrollbar.css"]});
         }
     })
 }

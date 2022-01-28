@@ -1,26 +1,30 @@
 {
     "name": "Show YouTube comments while watching",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Show YouTube comments on the right of the video. Read comments while you watch!",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "content_scripts": [{
         "matches": ["https://www.youtube.com/watch*"],
         "js": ["showYoutubeComments.js"],
         "css": ["showYoutubeComments.css"]
     }],
+    "host_permissions": [
+        "https://www.youtube.com/watch*"
+    ],
     "permissions": [
-        "https://www.youtube.com/*",
-        "tabs",
         "activeTab",
+        "scripting",
         "webNavigation",
         "storage"
     ],
     "background": {
-        "scripts": ["detectPageChange.js"],
-        "persistent": false
+        "service_worker": "detectPageChange.js"
     },
-    "browser_action": {
-        "default_popup": "popup.html"
+    "action": {
+        "default_popup": "popup.html",
+        "default_icons": {
+            "128": "128.png"
+        }
     },
     "icons": {
         "128": "128.png"
