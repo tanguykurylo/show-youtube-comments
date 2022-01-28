@@ -8,6 +8,11 @@ chrome.webNavigation.onCommitted.addListener(loadScriptAndCss, {
         urlPrefix: 'https://www.youtube.com/watch'
     }]
 });
+chrome.webNavigation.onHistoryStateUpdated.addListener(loadScriptAndCss, {
+    url: [{
+        urlPrefix: 'https://www.youtube.com/watch'
+    }]
+});
 
 function loadScriptAndCss(tab) {
     chrome.scripting.executeScript({target: {tabId: tab.tabId}, files: ["showYoutubeComments.js"]});
