@@ -7,7 +7,7 @@
     border-radius: 8px;
     border: 4px solid transparent;
     background-clip: content-box;
-    background-color: var(--yt-spec-icon-inactive);
+    background-color: var(--yt-opalescence-dark-grey);
 }
 
 #secondary::-webkit-scrollbar-thumb:hover, #secondary::-webkit-scrollbar-thumb:active {
