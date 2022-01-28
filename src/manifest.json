@@ -12,7 +12,6 @@
         "https://www.youtube.com/watch*"
     ],
     "permissions": [
-        "activeTab",
         "scripting",
         "webNavigation",
         "storage"
