@@ -1,10 +1,11 @@
-#secondary {
+#secondary,
+#primary {
     height: calc(100vh - 80px);
     overflow: scroll;
     overflow-x: hidden;
     overscroll-behavior: contain;
 }
 
-#secondary::-webkit-scrollbar {
+::-webkit-scrollbar {
     display: none;
 }
