@@ -35,5 +35,5 @@ function rightPanel() {
 }
 
 function leftPanel() {
-	return document.getElementById('primary-inner');
+	return document.getElementById('below');
 }
