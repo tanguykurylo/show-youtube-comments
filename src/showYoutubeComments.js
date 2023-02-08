@@ -1,39 +1,52 @@
 showCommentsOnTheRight();
 
 function showCommentsOnTheRight() {
-	if (!comments() || !watchNext()) {
+	let comments, watchNext;
+	if (!(comments = getComments()) || !(watchNext = getWatchNext())) {
 		window.setTimeout(showCommentsOnTheRight, 500);
 		return;
 	}
-	swapCommentsAndWatchNext();
+	swapCommentsAndWatchNext(comments, watchNext);
 }
 
-function swapCommentsAndWatchNext() {
-	if (!panelsContainNodes()) {
+function swapCommentsAndWatchNext(comments, watchNext) {
+	let leftPanel, rightPanel;
+	if (!(leftPanel = getLeftPanel()).contains(comments) || !(rightPanel = getRightPanel()).contains(watchNext)) {
 		return;
 	}
-	let commentsNode = leftPanel().removeChild(comments());
-	let watchNextNode = rightPanel().removeChild(watchNext());
-	leftPanel().appendChild(watchNextNode);
-	rightPanel().appendChild(commentsNode);
+	leftPanel.appendChild(rightPanel.removeChild(watchNext));
+	chrome.storage.sync.get(['show-comments'], value => {
+		comments = rightPanel.appendChild(leftPanel.removeChild(comments));
+        if (value['show-comments'] == true) {
+			return;
+		}
+		comments.style.display = "none";
+		const showComments = document.createElement("button");
+		showComments.className = "yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading ";
+		showComments.innerHTML = "Show Comments";
+		showComments.style.left = "50%";
+		showComments.style.transform = "translate(-50%, 0px)";
+		showComments.addEventListener("click", () =>
+		{
+			showComments.remove();
+			comments.style.display = "";
+		});
+		rightPanel.appendChild(showComments);
+    })
 }
 
-function comments() {
-	return document.getElementById('comments');
+function getComments() {
+	return document.querySelector('#comments');
 }
 
-function watchNext() {
-	return document.getElementById('related');
+function getWatchNext() {
+	return document.querySelector('#related');
 }
 
-function panelsContainNodes() {
-	return leftPanel().contains(comments()) && rightPanel().contains(watchNext());
+function getRightPanel() {
+	return document.querySelector('#secondary-inner');
 }
 
-function rightPanel() {
-	return document.getElementById('secondary-inner');
-}
-
-function leftPanel() {
-	return document.getElementById('primary-inner');
+function getLeftPanel() {
+	return document.querySelector('#primary-inner > #below');
 }

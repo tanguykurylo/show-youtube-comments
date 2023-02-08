@@ -1,7 +1,6 @@
 chrome.runtime.onInstalled.addListener(details => {
-  if(details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    chrome.storage.sync.set({ "show-scrollbar": false });
-  }
+  if(details.reason !== chrome.runtime.OnInstalledReason.INSTALL)return;
+  chrome.storage.sync.set({ "show-scrollbar": false, "show-comments": true });
 });
 chrome.webNavigation.onCommitted.addListener(loadScriptAndCss, {
     url: [{
@@ -20,9 +19,12 @@ function loadScriptAndCss(tab) {
     chrome.storage.sync.get(['show-scrollbar'], value => {
         if (value['show-scrollbar'] == true) {
             chrome.scripting.insertCSS({target: {tabId: tab.tabId}, files: ["showYoutubeComments-scrollbar.css"]});
+			return;
         }
-        else {
-            chrome.scripting.removeCSS({target: {tabId: tab.tabId}, files: ["showYoutubeComments-scrollbar.css"]});
-        }
+		chrome.scripting.removeCSS({target: {tabId: tab.tabId}, files: ["showYoutubeComments-scrollbar.css"]});
+    });
+	chrome.storage.sync.get(['show-comments'], value => {
+        if (value['show-comments'] == true) return;
+		
     })
 }
