@@ -1,19 +1,19 @@
 #comments::-webkit-scrollbar {
-    width: 16px;
+	width: 16px;
 }
 
 #comments::-webkit-scrollbar-thumb {
-    height: 56px;
-    border-radius: 8px;
-    border: 4px solid transparent;
-    background-clip: content-box;
-    background-color: var(--yt-opalescence-dark-grey);
+	height: 56px;
+	border-radius: 8px;
+	border: 4px solid transparent;
+	background-clip: content-box;
+	background-color: var(--yt-opalescence-dark-grey);
 }
 
 #comments::-webkit-scrollbar-thumb:hover, #comments::-webkit-scrollbar-thumb:active {
-    background-color: var(--yt-spec-icon-disabled);
+	background-color: var(--yt-spec-icon-disabled);
 }
 
 #comments::-webkit-scrollbar {
-    display: block;
+	display: block;
 }

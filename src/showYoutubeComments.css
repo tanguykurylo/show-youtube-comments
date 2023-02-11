@@ -1,11 +1,11 @@
 #comments {
-    height: calc(100vh - 80px);
-    overflow: scroll;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
+	max-height: calc(100vh - 80px);
+	overflow: scroll;
+	overflow-x: hidden;
+	overscroll-behavior: contain;
 	margin-bottom: var(--ytd-margin-6x);
 }
 
 #comments::-webkit-scrollbar {
-    display: none;
+	display: none;
 }

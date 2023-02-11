@@ -1,65 +1,95 @@
-showCommentsOnTheRight();
+showCommentsOnTheRight(null, null, null, null);
 
-function showCommentsOnTheRight() {
-	let comments, watchNext;
-	if (!(comments = getComments()) || !(watchNext = getWatchNext())) {
-		window.setTimeout(showCommentsOnTheRight, 500);
+function showCommentsOnTheRight(comments, watchNext, leftPanel, rightPanel) {
+	if (!(comments ??= getComments()) || !(watchNext ??= getWatchNext()) ||
+		!(leftPanel ??= getLeftPanel()) || !(rightPanel ??= getRightPanel())) {
+		window.setTimeout(() => showCommentsOnTheRight(comments, watchNext, leftPanel, rightPanel), 100);
 		return;
 	}
-	swapCommentsAndWatchNext(comments, watchNext);
+	initiateChanges(comments, watchNext, leftPanel, rightPanel);
 }
 
-function swapCommentsAndWatchNext(comments, watchNext) {
-	let leftPanel, rightPanel;
-	if (!(leftPanel = getLeftPanel()).contains(comments) || !(rightPanel = getRightPanel()).contains(watchNext)) {
-		return;
-	}
+function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
+	const commentsStyle = comments.style;
 	
-	chrome.storage.sync.get(['show-comments', 'swap-watch-next'], value => {
-		if(value['swap-watch-next'] == true) {
-			leftPanel.appendChild(rightPanel.removeChild(watchNext));
-			comments = rightPanel.appendChild(leftPanel.removeChild(comments));
-		}
-		else comments = rightPanel.insertBefore(leftPanel.removeChild(comments), watchNext);
-				
-		if (value['show-comments'] == true || getChat(rightPanel)) {
-			return;
-		}
-		comments.style.display = "none";
-		const showComments = document.createElement("button");
-		showComments.className = "yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading ";
-		showComments.innerHTML = "Show Comments";
-		const style = showComments.style;
-		style.left = "50%";
-		style.transform = "translate(-50%, 0px)";
-		style.marginBottom = "var(--ytd-margin-6x)";
+	chrome.storage.sync.get(["show-comments", "swap-watch-next"], value => {
+		const showComments = value["show-comments"] == true, swapWatchNext = value["swap-watch-next"] == true;
 		
-		showComments.addEventListener("click", () =>
+		// Move comments from left to right
+		if(leftPanel.contains(comments))
 		{
-			showComments.remove();
+			comments = swapWatchNext ? rightPanel.appendChild(leftPanel.removeChild(comments)) :
+										rightPanel.insertBefore(leftPanel.removeChild(comments), watchNext);
+			
+		}
+		
+		// If we want to swap the Watch Next section from right to left
+		if(swapWatchNext)
+		{
+			if(rightPanel.contains(watchNext))
+				watchNext = leftPanel.appendChild(rightPanel.removeChild(watchNext));
+		}
+		else if(leftPanel.contains(watchNext))
+			watchNext = rightPanel.appendChild(leftPanel.removeChild(watchNext));
+		
+		// If we want to always show the comments
+		let showCommentsBtn = document.querySelector("#show-comments");
+		if(showComments)
+		{
+			// Make comments visible
 			comments.style.display = "";
-		});
-		if(value['swap-watch-next'] == true)rightPanel.appendChild(showComments);
-		else rightPanel.insertBefore(showComments, watchNext);
-    });
+			
+			// If the Show Comments button exists in the DOM, hide it
+			if(showCommentsBtn)showCommentsBtn.style.display = "none";
+		}
+		else
+		{
+			// Make comments hidden
+			commentsStyle.display = "none";
+			
+			// Make sure Show Comments button is seen
+			if(showCommentsBtn)showCommentsBtn.style.display = "";
+			else
+			{
+				showCommentsBtn = document.createElement("button");
+				showCommentsBtn.id = "show-comments";
+				showCommentsBtn.className = "yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading ";
+				showCommentsBtn.innerHTML = "Show Comments";
+				
+				const showCommentsStyle = showCommentsBtn.style;
+				showCommentsStyle.left = "50%";
+				showCommentsStyle.transform = "translate(-50%, 0px)";
+				showCommentsStyle.marginBottom = "var(--ytd-margin-6x)";
+				
+				showCommentsBtn.addEventListener("click", () =>
+				{
+					showCommentsStyle.display = "none";
+					commentsStyle.display = "";
+				});
+				
+				if(swapWatchNext)rightPanel.appendChild(showCommentsBtn);
+				else rightPanel.insertBefore(showCommentsBtn, watchNext);
+			}
+		}
+	});
 }
 
 function getComments() {
-	return document.querySelector('#comments');
+	return document.querySelector("#comments");
 }
 
 function getWatchNext() {
-	return document.querySelector('#related');
+	return document.querySelector("#related");
 }
 
 function getChat (rightPanel) {
 	return rightPanel.querySelector("#chat");
 }
 
-function getRightPanel() {
-	return document.querySelector('#secondary-inner');
+function getLeftPanel() {
+	return document.querySelector("#primary-inner > #below");
 }
 
-function getLeftPanel() {
-	return document.querySelector('#primary-inner > #below');
+function getRightPanel() {
+	return document.querySelector("#secondary-inner");
 }
