@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.sync.get(['show-scrollbar'], value => {
-        showScrollbar = value['show-scrollbar'] || false
+        let showScrollbar = value['show-scrollbar'] ?? false
         const scrollbarButton = document.querySelector("#show-scrollbar")
         scrollbarButton.checked = showScrollbar
         scrollbarButton.addEventListener("click", () => {
@@ -13,15 +13,28 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 	
 	chrome.storage.sync.get(['show-comments'], value => {
-        showScrollbar = value['show-comments'] || true
+        let showComments = value['show-comments'] ?? true
         const commentsButton = document.querySelector("#show-comments")
-        commentsButton.checked = showScrollbar
+        commentsButton.checked = showComments
         commentsButton.addEventListener("click", () => {
-            showScrollbar = !showScrollbar
-            chrome.storage.sync.set({ "show-comments": showScrollbar });
-            commentsButton.checked = showScrollbar
-            console.log(`local show-comments: ${showScrollbar}`)
+            showComments = !showComments
+            chrome.storage.sync.set({ "show-comments": showComments });
+            commentsButton.checked = showComments
+            console.log(`local show-comments: ${showComments}`)
             chrome.storage.sync.get(['show-comments'], value => {console.log(`stored show-comments: ${value['show-comments']}`)})
+        })
+    })
+	
+	chrome.storage.sync.get(['swap-watch-next'], value => {
+        let swapWatchNext = value['swap-watch-next'] ?? false
+        const swapButton = document.querySelector("#swap-watch-next")
+        swapButton.checked = swapWatchNext
+        swapButton.addEventListener("click", () => {
+            swapWatchNext = !swapWatchNext
+            chrome.storage.sync.set({ "swap-watch-next": swapWatchNext });
+            swapButton.checked = swapWatchNext
+            console.log(`local swap-watch-next: ${swapWatchNext}`)
+            chrome.storage.sync.get(['swap-watch-next'], value => {console.log(`stored swap-watch-next: ${value['swap-watch-next']}`)})
         })
     })
 })
