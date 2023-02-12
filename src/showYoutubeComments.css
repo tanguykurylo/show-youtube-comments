@@ -9,3 +9,9 @@
 #comments::-webkit-scrollbar {
 	display: none;
 }
+
+#show-comments {
+	left: 50%;
+	transform: translate(-50%, 0px);
+	margin-bottom: var(--ytd-margin-6x);
+}

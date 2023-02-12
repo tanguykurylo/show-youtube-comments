@@ -47,6 +47,10 @@ function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
 			// Make comments hidden
 			commentsStyle.display = "none";
 			
+			// If this is a live stream, there is no comment to show.
+			const liveBtn = document.querySelector(".ytp-live-badge");
+			if(liveBtn && window.getComputedStyle(liveBtn).display !== "none")return;
+			
 			// Make sure Show Comments button is seen
 			if(showCommentsBtn)showCommentsBtn.style.display = "";
 			else
@@ -56,14 +60,9 @@ function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
 				showCommentsBtn.className = "yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading ";
 				showCommentsBtn.innerHTML = "Show Comments";
 				
-				const showCommentsStyle = showCommentsBtn.style;
-				showCommentsStyle.left = "50%";
-				showCommentsStyle.transform = "translate(-50%, 0px)";
-				showCommentsStyle.marginBottom = "var(--ytd-margin-6x)";
-				
 				showCommentsBtn.addEventListener("click", () =>
 				{
-					showCommentsStyle.display = "none";
+					showCommentsBtn.style.display = "none";
 					commentsStyle.display = "";
 				});
 				
