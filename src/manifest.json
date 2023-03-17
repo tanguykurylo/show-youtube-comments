@@ -1,31 +1,27 @@
 {
-    "name": "Show YouTube comments while watching",
-    "version": "1.0.3",
-    "description": "Show YouTube comments on the right of the video. Read comments while you watch!",
-    "manifest_version": 3,
-    "content_scripts": [{
-        "matches": ["https://www.youtube.com/watch*"],
-        "js": ["showYoutubeComments.js"],
-        "css": ["showYoutubeComments.css"]
-    }],
-    "host_permissions": [
-        "https://www.youtube.com/watch*"
-    ],
-    "permissions": [
-        "scripting",
-        "webNavigation",
-        "storage"
-    ],
-    "background": {
-        "service_worker": "detectPageChange.js"
-    },
-    "action": {
-        "default_popup": "popup.html",
-        "default_icons": {
-            "128": "128.png"
-        }
-    },
-    "icons": {
-        "128": "128.png"
-    }
+   "action": {
+      "default_icons": {
+         "128": "128.png"
+      },
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "detectPageChange.js"
+   },
+   "content_scripts": [ {
+      "css": [ "showYoutubeComments.css" ],
+      "js": [ "showYoutubeComments.js" ],
+      "matches": [ "https://www.youtube.com/watch*" ]
+   } ],
+   "description": "Show YouTube comments on the right of the video. Read comments while you watch!",
+   "host_permissions": [ "https://www.youtube.com/watch*" ],
+   "icons": {
+      "128": "128.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvVKr9w+fOFRs23uXXKBNuc8j/2bDS3W2mE4b6KUr5f3jzjY2rq2rthF/LRhcDlGUExIKMyV490DClaO3fyPSW662wt98vb4lfGEO74zT6StQ1e6tIBznsm4zXdZnHCpXm6Goy23JUERyse1jNz6ywX+1XPo5ifaqeDQRCg1UjN7r/YS03kka02amhgB1dN2NSUJK91LBJM2VAxbgqBu8ulQHa34axaV04/O7e9vvLi71dZlm6rK+oB17lZDxZ81K098/IcdXaBeI+x8dZ1gGy10EHHaUWvgENFx1uM2VTqrzoAmeqME3hmvXSZ2tSXcBHuVGT28ygI/YXQdI15/kOwIDAQAB",
+   "manifest_version": 3,
+   "name": "Show YouTube comments while watching",
+   "permissions": [ "scripting", "webNavigation", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.5"
 }

@@ -1,10 +1,17 @@
-#secondary {
-    height: calc(100vh - 80px);
-    overflow: scroll;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
+#comments {
+	max-height: calc(100vh - 80px);
+	overflow: scroll;
+	overflow-x: hidden;
+	overscroll-behavior: contain;
+	margin-bottom: var(--ytd-margin-6x);
 }
 
-#secondary::-webkit-scrollbar {
-    display: none;
+#comments::-webkit-scrollbar {
+	display: none;
+}
+
+#show-comments {
+	left: 50%;
+	transform: translate(-50%, 0px);
+	margin-bottom: var(--ytd-margin-6x);
 }

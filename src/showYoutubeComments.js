@@ -1,39 +1,94 @@
-showCommentsOnTheRight();
+showCommentsOnTheRight(null, null, null, null);
 
-function showCommentsOnTheRight() {
-	if (!comments() || !watchNext()) {
-		window.setTimeout(showCommentsOnTheRight, 500);
+function showCommentsOnTheRight(comments, watchNext, leftPanel, rightPanel) {
+	if (!(comments ??= getComments()) || !(watchNext ??= getWatchNext()) ||
+		!(leftPanel ??= getLeftPanel()) || !(rightPanel ??= getRightPanel())) {
+		window.setTimeout(() => showCommentsOnTheRight(comments, watchNext, leftPanel, rightPanel), 100);
 		return;
 	}
-	swapCommentsAndWatchNext();
+	initiateChanges(comments, watchNext, leftPanel, rightPanel);
 }
 
-function swapCommentsAndWatchNext() {
-	if (!panelsContainNodes()) {
-		return;
-	}
-	let commentsNode = leftPanel().removeChild(comments());
-	let watchNextNode = rightPanel().removeChild(watchNext());
-	leftPanel().appendChild(watchNextNode);
-	rightPanel().appendChild(commentsNode);
+function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
+	const commentsStyle = comments.style;
+	
+	chrome.storage.sync.get(["show-comments", "swap-watch-next"], value => {
+		const showComments = value["show-comments"] == true, swapWatchNext = value["swap-watch-next"] == true;
+		
+		// Move comments from left to right
+		if(leftPanel.contains(comments))
+		{
+			comments = swapWatchNext ? rightPanel.appendChild(leftPanel.removeChild(comments)) :
+										rightPanel.insertBefore(leftPanel.removeChild(comments), watchNext);
+			
+		}
+		
+		// If we want to swap the Watch Next section from right to left
+		if(swapWatchNext)
+		{
+			if(rightPanel.contains(watchNext))
+				watchNext = leftPanel.appendChild(rightPanel.removeChild(watchNext));
+		}
+		else if(leftPanel.contains(watchNext))
+			watchNext = rightPanel.appendChild(leftPanel.removeChild(watchNext));
+		
+		// If we want to always show the comments
+		let showCommentsBtn = document.querySelector("#show-comments");
+		if(showComments)
+		{
+			// Make comments visible
+			comments.style.display = "";
+			
+			// If the Show Comments button exists in the DOM, hide it
+			if(showCommentsBtn)showCommentsBtn.style.display = "none";
+		}
+		else
+		{
+			// Make comments hidden
+			commentsStyle.display = "none";
+			
+			// If this is a live stream, there is no comment to show.
+			const liveBtn = document.querySelector(".ytp-live-badge");
+			if(liveBtn && window.getComputedStyle(liveBtn).display !== "none")return;
+			
+			// Make sure Show Comments button is seen
+			if(showCommentsBtn)showCommentsBtn.style.display = "";
+			else
+			{
+				showCommentsBtn = document.createElement("button");
+				showCommentsBtn.id = "show-comments";
+				showCommentsBtn.className = "yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading ";
+				showCommentsBtn.innerHTML = "Show Comments";
+				
+				showCommentsBtn.addEventListener("click", () =>
+				{
+					showCommentsBtn.style.display = "none";
+					commentsStyle.display = "";
+				});
+				
+				if(swapWatchNext)rightPanel.appendChild(showCommentsBtn);
+				else rightPanel.insertBefore(showCommentsBtn, watchNext);
+			}
+		}
+	});
 }
 
-function comments() {
-	return document.getElementById('comments');
+function getComments() {
+	return document.querySelector("#comments");
 }
 
-function watchNext() {
-	return document.getElementById('related');
+function getWatchNext() {
+	return document.querySelector("#related");
 }
 
-function panelsContainNodes() {
-	return leftPanel().contains(comments()) && rightPanel().contains(watchNext());
+function getChat (rightPanel) {
+	return rightPanel.querySelector("#chat");
 }
 
-function rightPanel() {
-	return document.getElementById('secondary-inner');
+function getLeftPanel() {
+	return document.querySelector("#primary-inner > #below");
 }
 
-function leftPanel() {
-	return document.getElementById('primary-inner');
+function getRightPanel() {
+	return document.querySelector("#secondary-inner");
 }
