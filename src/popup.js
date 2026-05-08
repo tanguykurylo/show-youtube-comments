@@ -1,15 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-    chrome.storage.sync.get(['show-scrollbar'], value => {
-        showScrollbar = value['show-scrollbar'] || false
-        let scrollbarButton = document.getElementById("show-scrollbar")
-        scrollbarButton.checked = showScrollbar
-        scrollbarButton.addEventListener("click", () => {
-            showScrollbar = !showScrollbar
-            chrome.storage.sync.set({ "show-scrollbar": showScrollbar });
-            scrollbarButton.checked = showScrollbar
-            console.log(`local show-scrollbar: ${showScrollbar}`)
-            chrome.storage.sync.get(['show-scrollbar'], value => {console.log(`stored show-scrollbar: ${value['show-scrollbar']}`)})
-        })
-    })
-    
+	chrome.storage.sync.get(["show-scrollbar", "show-comments", "swap-watch-next"], value => {
+		function setupOption (id, defaultValue)
+		{
+			let currentValue = value[id] ?? defaultValue;
+			const checkbox = document.querySelector(`#${id}`);
+			checkbox.checked = currentValue;
+			checkbox.addEventListener("click", () => {
+				currentValue = !currentValue;
+				chrome.storage.sync.set({ [id]: currentValue });
+				checkbox.checked = currentValue;
+			});
+		}
+		
+		setupOption("show-scrollbar", false);
+		setupOption("show-comments", true);
+		setupOption("swap-watch-next", false);
+	});
 })
