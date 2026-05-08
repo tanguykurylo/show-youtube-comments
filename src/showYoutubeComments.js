@@ -57,7 +57,7 @@ function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
 			{
 				showCommentsBtn = document.createElement("button");
 				showCommentsBtn.id = "show-comments";
-				showCommentsBtn.className = "yt-spec-button-shape-next yt-spec-button-shape-next--tonal yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-leading ";
+				showCommentsBtn.className = "ytSpecButtonShapeNextHost ytSpecButtonShapeNextTonal ytSpecButtonShapeNextMono ytSpecButtonShapeNextSizeM ytSpecButtonShapeNextIconLeading ytSpecButtonShapeNextEnableBackdropFilterExperiment";
 				showCommentsBtn.innerHTML = "Show Comments";
 				
 				showCommentsBtn.addEventListener("click", () =>
