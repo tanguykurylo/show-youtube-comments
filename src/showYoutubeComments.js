@@ -1,7 +1,7 @@
 showCommentsOnTheRight();
 
 function showCommentsOnTheRight() {
-	if (!comments() || !watchNext()) {
+	if (!panelsContainNodes()) {
 		window.setTimeout(showCommentsOnTheRight, 500);
 		return;
 	}
@@ -10,12 +10,13 @@ function showCommentsOnTheRight() {
 
 function swapCommentsAndWatchNext() {
 	if (!panelsContainNodes()) {
-		return;
 	}
-	let commentsNode = leftPanel().removeChild(comments());
-	let watchNextNode = rightPanel().removeChild(watchNext());
-	leftPanel().appendChild(watchNextNode);
-	rightPanel().appendChild(commentsNode);
+	let leftParent = document.getElementById('comments').parentElement;
+	let rightParent = document.getElementById('related').parentElement;
+	let commentsNode = leftParent.removeChild(comments());
+	let watchNextNode = rightParent.removeChild(watchNext());
+	leftParent.appendChild(watchNextNode);
+	rightParent.appendChild(commentsNode);
 }
 
 function comments() {
@@ -27,7 +28,7 @@ function watchNext() {
 }
 
 function panelsContainNodes() {
-	return leftPanel().contains(comments()) && rightPanel().contains(watchNext());
+	return leftPanel()?.contains(comments()) && rightPanel()?.contains(watchNext());
 }
 
 function rightPanel() {
