@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
             chrome.storage.sync.set({ "show-scrollbar": showScrollbar });
             scrollbarButton.checked = showScrollbar
             console.log(`local show-scrollbar: ${showScrollbar}`)
-            chrome.storage.sync.get(['show-scrollbar'], value => {console.log(`stored show-scrollbar: ${value['show-scrollbar']}`)})
+            chrome.storage.sync.get(['show-scrollbar'], value => { console.log(`stored show-scrollbar: ${value['show-scrollbar']}`) })
         })
     })
-    
+
 })

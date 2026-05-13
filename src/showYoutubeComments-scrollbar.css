@@ -10,7 +10,8 @@
     background-color: var(--yt-opalescence-dark-grey);
 }
 
-#secondary::-webkit-scrollbar-thumb:hover, #secondary::-webkit-scrollbar-thumb:active {
+#secondary::-webkit-scrollbar-thumb:hover,
+#secondary::-webkit-scrollbar-thumb:active {
     background-color: var(--yt-spec-icon-disabled);
 }
 

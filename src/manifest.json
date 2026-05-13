@@ -3,11 +3,19 @@
     "version": "1.0.3",
     "description": "Show YouTube comments on the right of the video. Read comments while you watch!",
     "manifest_version": 3,
-    "content_scripts": [{
-        "matches": ["https://www.youtube.com/watch*"],
-        "js": ["showYoutubeComments.js"],
-        "css": ["showYoutubeComments.css"]
-    }],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/watch*"
+            ],
+            "js": [
+                "showYoutubeComments.js"
+            ],
+            "css": [
+                "showYoutubeComments.css"
+            ]
+        }
+    ],
     "host_permissions": [
         "https://www.youtube.com/watch*"
     ],
