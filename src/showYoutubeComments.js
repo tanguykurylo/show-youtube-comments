@@ -18,8 +18,9 @@ function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
 		// Move comments from left to right
 		if(leftPanel.contains(comments))
 		{
-			comments = swapWatchNext ? rightPanel.appendChild(leftPanel.removeChild(comments)) :
-										rightPanel.insertBefore(leftPanel.removeChild(comments), watchNext);
+			comments.remove();
+			comments = swapWatchNext ? rightPanel.appendChild(comments) :
+										rightPanel.insertBefore(comments, watchNext);
 			
 		}
 		
@@ -27,10 +28,16 @@ function initiateChanges(comments, watchNext, leftPanel, rightPanel) {
 		if(swapWatchNext)
 		{
 			if(rightPanel.contains(watchNext))
-				watchNext = leftPanel.appendChild(rightPanel.removeChild(watchNext));
+			{
+				watchNext.remove();
+				watchNext = leftPanel.appendChild(watchNext);
+			}
 		}
 		else if(leftPanel.contains(watchNext))
-			watchNext = rightPanel.appendChild(leftPanel.removeChild(watchNext));
+		{
+			watchNext.remove();
+			watchNext = rightPanel.appendChild(watchNext);
+		}
 		
 		// If we want to always show the comments
 		let showCommentsBtn = document.querySelector("#show-comments");
