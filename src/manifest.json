@@ -25,11 +25,18 @@
         "storage"
     ],
     "background": {
-        "service_worker": "detectPageChange.js"
+        "service_worker": "detectPageChange.js",
+        "scripts": ["detectPageChange.js"]
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "show-youtube-comments@tanguykurylo",
+            "strict_min_version": "109.0"
+        }
     },
     "action": {
         "default_popup": "popup.html",
-        "default_icons": {
+        "default_icon": {
             "128": "128.png"
         }
     },
