@@ -8,6 +8,13 @@ if (!globalThis.showYoutubeCommentsObserver) {
 	globalThis.showYoutubeCommentsObserver = new MutationObserver(showCommentsOnTheRight);
 	globalThis.showYoutubeCommentsObserver.observe(document.body, { childList: true, subtree: true });
 	showCommentsOnTheRight();
+
+	chrome.storage.sync.get(['show-scrollbar'], value => showScrollbar(value['show-scrollbar']));
+	chrome.storage.onChanged.addListener(changes => {
+		if (changes['show-scrollbar']) {
+			showScrollbar(changes['show-scrollbar'].newValue);
+		}
+	});
 }
 
 function showCommentsOnTheRight() {
@@ -27,6 +34,10 @@ function showCommentsOnTheRight() {
 	if (!leftPanel().contains(watchNext())) {
 		leftSlot.appendChild(watchNext());
 	}
+}
+
+function showScrollbar(show) {
+	document.documentElement.toggleAttribute('data-show-comments-scrollbar', show == true);
 }
 
 function comments() {

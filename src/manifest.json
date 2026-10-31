@@ -12,7 +12,8 @@
                 "showYoutubeComments.js"
             ],
             "css": [
-                "showYoutubeComments.css"
+                "showYoutubeComments.css",
+                "showYoutubeComments-scrollbar.css"
             ]
         }
     ],
