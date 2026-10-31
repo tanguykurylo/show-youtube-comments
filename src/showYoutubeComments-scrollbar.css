@@ -1,8 +1,8 @@
-html[data-show-comments-scrollbar] #secondary::-webkit-scrollbar {
+html[data-show-comments-scrollbar] ytd-watch-flexy #secondary::-webkit-scrollbar {
     width: 16px;
 }
 
-html[data-show-comments-scrollbar] #secondary::-webkit-scrollbar-thumb {
+html[data-show-comments-scrollbar] ytd-watch-flexy #secondary::-webkit-scrollbar-thumb {
     height: 56px;
     border-radius: 8px;
     border: 4px solid transparent;
@@ -10,11 +10,11 @@ html[data-show-comments-scrollbar] #secondary::-webkit-scrollbar-thumb {
     background-color: var(--yt-opalescence-dark-grey);
 }
 
-html[data-show-comments-scrollbar] #secondary::-webkit-scrollbar-thumb:hover,
-html[data-show-comments-scrollbar] #secondary::-webkit-scrollbar-thumb:active {
+html[data-show-comments-scrollbar] ytd-watch-flexy #secondary::-webkit-scrollbar-thumb:hover,
+html[data-show-comments-scrollbar] ytd-watch-flexy #secondary::-webkit-scrollbar-thumb:active {
     background-color: var(--yt-spec-icon-disabled);
 }
 
-html[data-show-comments-scrollbar] #secondary::-webkit-scrollbar {
+html[data-show-comments-scrollbar] ytd-watch-flexy #secondary::-webkit-scrollbar {
     display: block;
 }

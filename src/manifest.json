@@ -6,7 +6,7 @@
     "content_scripts": [
         {
             "matches": [
-                "https://www.youtube.com/watch*"
+                "https://www.youtube.com/*"
             ],
             "js": [
                 "showYoutubeComments.js"
@@ -25,10 +25,6 @@
         "webNavigation",
         "storage"
     ],
-    "background": {
-        "service_worker": "detectPageChange.js",
-        "scripts": ["detectPageChange.js"]
-    },
     "browser_specific_settings": {
         "gecko": {
             "id": "show-youtube-comments@tanguykurylo",
