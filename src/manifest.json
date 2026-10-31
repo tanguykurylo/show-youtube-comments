@@ -17,12 +17,7 @@
             ]
         }
     ],
-    "host_permissions": [
-        "https://www.youtube.com/watch*"
-    ],
     "permissions": [
-        "scripting",
-        "webNavigation",
         "storage"
     ],
     "browser_specific_settings": {
