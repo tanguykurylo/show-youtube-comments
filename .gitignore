@@ -2,3 +2,6 @@
 src.pem
 src.crx
 src.zip
+
+# Packaged extensions
+build/
