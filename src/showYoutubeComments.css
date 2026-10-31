@@ -3,8 +3,5 @@ ytd-watch-flexy #secondary {
     overflow: scroll;
     overflow-x: hidden;
     overscroll-behavior: contain;
-}
-
-ytd-watch-flexy #secondary::-webkit-scrollbar {
-    display: none;
+    scrollbar-width: none;
 }
