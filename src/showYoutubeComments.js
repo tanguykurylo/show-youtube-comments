@@ -1,22 +1,32 @@
-showCommentsOnTheRight();
+// Parents of #comments and #related in YouTube's original layout
+var leftSlot, rightSlot;
 
-function showCommentsOnTheRight() {
-	if (!panelsContainNodes()) {
-		window.setTimeout(showCommentsOnTheRight, 500);
-		return;
-	}
-	swapCommentsAndWatchNext();
+// The script can be injected several times in the same page, only observe once
+if (!globalThis.showYoutubeCommentsObserver) {
+	// YouTube moves #comments and #related back when it rebuilds its layout (e.g. on resize)
+	// See docs: https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver
+	globalThis.showYoutubeCommentsObserver = new MutationObserver(showCommentsOnTheRight);
+	globalThis.showYoutubeCommentsObserver.observe(document.body, { childList: true, subtree: true });
+	showCommentsOnTheRight();
 }
 
-function swapCommentsAndWatchNext() {
-	if (!panelsContainNodes()) {
+function showCommentsOnTheRight() {
+	if (!comments() || !watchNext()) {
+		return;
 	}
-	let leftParent = document.getElementById('comments').parentElement;
-	let rightParent = document.getElementById('related').parentElement;
-	let commentsNode = leftParent.removeChild(comments());
-	let watchNextNode = rightParent.removeChild(watchNext());
-	leftParent.appendChild(watchNextNode);
-	rightParent.appendChild(commentsNode);
+	if (leftPanel()?.contains(comments()) && rightPanel()?.contains(watchNext())) {
+		leftSlot = comments().parentElement;
+		rightSlot = watchNext().parentElement;
+	}
+	if (!leftSlot?.isConnected || !rightSlot?.isConnected) {
+		return;
+	}
+	if (!rightPanel().contains(comments())) {
+		rightSlot.appendChild(comments());
+	}
+	if (!leftPanel().contains(watchNext())) {
+		leftSlot.appendChild(watchNext());
+	}
 }
 
 function comments() {
@@ -25,10 +35,6 @@ function comments() {
 
 function watchNext() {
 	return document.getElementById('related');
-}
-
-function panelsContainNodes() {
-	return leftPanel()?.contains(comments()) && rightPanel()?.contains(watchNext());
 }
 
 function rightPanel() {
