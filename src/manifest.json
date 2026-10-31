@@ -1,6 +1,6 @@
 {
     "name": "Show YouTube comments while watching",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "Show YouTube comments on the right of the video. Read comments while you watch!",
     "manifest_version": 3,
     "content_scripts": [
